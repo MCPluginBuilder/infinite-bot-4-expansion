@@ -41,19 +41,20 @@ public class AuthListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onAuth(MessageEvent event) {
-        String msg = event.getRawMessage();
-        if (!msg.startsWith("验证 ")) {
-            if (msg.startsWith("清空缓存 ") && StaticAPI.isAdmin(event.getSender().getUserId())) {
-                int value = Integer.parseInt(msg.split(" ")[1]);
-                LoginListener.clearCommon(value);
-                event.reply("Done-");
-                event.setCancelled(true);
-            }
+        String msg = event.getRawMessage().trim();
+        if (msg.startsWith("清空缓存 ") && StaticAPI.isAdmin(event.getSender().getUserId())) {
+            int value = Integer.parseInt(msg.split(" ")[1]);
+            LoginListener.clearCommon(value);
+            event.reply("Done-");
+            event.setCancelled(true);
+            return;
+        }
+        final PlayerData data = StaticAPI.getRepository().queryByUserId(event.getSender().getUserId());
+
+        if (LoginListener.getDATA_HASH_MAP().isEmpty()) {
             return;
         }
         event.setCancelled(true);
-        msg = msg.substring("验证 ".length());
-        final PlayerData data = StaticAPI.getRepository().queryByUserId(event.getSender().getUserId());
 
         if (authType == 1) {
             if (data != null && data.getValidUUID() != null) {
@@ -67,8 +68,6 @@ public class AuthListener implements Listener {
                 return;
             }
             doAuth(msg, event.getUserId(), data, false, event::reply);
-        } else {
-            event.reply(language.get("auth", "notice"));
         }
     }
 

@@ -6,11 +6,11 @@ import java.util.Random;
 public class AuthUtil {
 
     public static int codeLength = -1;
-    private static final String SYMBOLS = "0123456789abcdefghijklmnopqrstuvwxyz";
+    private static final String SYMBOLS = "0123456789";
     private static final Random RANDOM = new SecureRandom();
 
     public static String getCode(int joins) {
-        char[] nonceChars = new char[joins > 800 ? (joins > 4000 ? 6 : 5) : 4];
+        char[] nonceChars = new char[joins > 80 ? (joins > 400 ? 6 : 5) : 4];
 
         codeLength = nonceChars.length;
 

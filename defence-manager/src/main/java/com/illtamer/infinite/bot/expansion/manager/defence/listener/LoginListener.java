@@ -11,6 +11,7 @@ import com.illtamer.infinite.bot.minecraft.start.bukkit.BukkitBootstrap;
 import com.illtamer.infinite.bot.minecraft.util.PluginUtil;
 import com.illtamer.infinite.bot.minecraft.util.ValidUtil;
 import com.illtamer.perpetua.sdk.Pair;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -25,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class LoginListener implements Listener {
+    @Getter
     private static final HashMap<UUID, AuthData> DATA_HASH_MAP = new HashMap<>();
     private static final LinkedList<BukkitTask> authList = new LinkedList<>();
     private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
